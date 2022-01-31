@@ -1,4 +1,5 @@
 import sys
+import html
 from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox
 
 from kysymykset import lataa_kysymykset_netista
@@ -38,7 +39,8 @@ class MainWindow(QMainWindow):
         uudet_tekstit = []
         for (numero, teksti) in enumerate(tekstit):
             if teksti.startswith("*"):
-                teksti = teksti[1:]
+                # piilota tähti
+                # teksti = teksti[1:]
                 self.oikea_vastaus = numero
             uudet_tekstit.append(teksti)
         self.aseta_tekstit(uudet_tekstit)
