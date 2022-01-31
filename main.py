@@ -27,6 +27,7 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.vaihda_kysymys_ja_vastaukset(0)
+        self.kytke_napit()
 
     def vaihda_kysymys_ja_vastaukset(self, indeksi):
         tekstit = KYSYMYKSET_JA_VASTAUKSET[indeksi]
@@ -52,6 +53,14 @@ class MainWindow(QMainWindow):
     def aseta_kysymys(self, kysymys):
         self.ui.label.setText(kysymys)
 
+    def kytke_napit(self):
+        self.ui.button1.clicked.connect(self.nappia_painettu)
+        self.ui.button1.clicked.connect(self.nappia_painettu)
+        self.ui.button1.clicked.connect(self.nappia_painettu)
+        self.ui.button1.clicked.connect(self.nappia_painettu)
+
+    def nappia_painettu(self):
+        print("PAINETTU NAPPIA")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
