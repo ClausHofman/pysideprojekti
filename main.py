@@ -15,6 +15,7 @@ class MainWindow(QMainWindow):
         self.tiedot = lataa_kysymykset_netista()
         self.vaihda_kysymys_ja_vastaukset(0)
         self.kytke_napit()
+        self.kierros = 1
         self.pisteet = 0
         self.indeksi = 0
 
@@ -82,6 +83,7 @@ class MainWindow(QMainWindow):
             laatikko = QMessageBox(self)
             laatikko.setText(f"Peli päättyi! Sait {self.pisteet} pistettä.")
             laatikko.exec()
+            self.kierros += 1
             self.indeksi = 0
             self.pisteet = 0
 
@@ -94,8 +96,12 @@ class MainWindow(QMainWindow):
     @pisteet.setter
     def pisteet(self, arvo):
         self._pisteet = arvo
-        self.ui.statusbar.showMessage(f"Pisteet: {self.pisteet}")
+        self.paivita_tilarivi()
 
+    def paivita_tilarivi(self):
+        self.ui.statusbar.showMessage(
+            f"Pisteet: {self.pisteet} Kierros: {self.kierros}"
+        )
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
