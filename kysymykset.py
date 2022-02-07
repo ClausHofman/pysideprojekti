@@ -6,9 +6,33 @@ import random
 
 API_OSOITE = "https://opentdb.com/api.php?amount=10&difficulty=easy&type=multiple"
 
+VARAKYSYMYKSET = {
+    "results":  [
+        {
+            "question": "Kysymys A",
+            "correct_answer": "Oikea",
+            "incorrect_answers": ["Väärä 1", "Väärä 2", "Väärä 3"],
+        },
+        {
+            "question": "Kysymys B",
+            "correct_answer": "Oikea",
+            "incorrect_answers": ["Väärä 1", "Väärä 2", "Väärä 3"],
+        },
+        {
+            "question": "Kysymys C",
+            "correct_answer": "Oikea",
+            "incorrect_answers": ["Väärä 1", "Väärä 2", "Väärä 3"],
+        },
+    ],
+}
+
 def lataa_kysymykset_netista():
-    vastaus = requests.get(API_OSOITE)
-    tiedot = vastaus.json()
+    try:
+        vastaus = requests.get(API_OSOITE, timeout=2.0)
+        tiedot = vastaus.json()
+    except requests.exceptions.RequestException:
+        tiedot = VARAKYSYMYKSET
+
     kysymykset_ja_vastaukset = []
     for juttu in tiedot["results"]:
         kysymys = juttu["question"]

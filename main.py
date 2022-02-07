@@ -1,9 +1,10 @@
 import sys
 import html
 from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox
-
+import time
 from kysymykset import lataa_kysymykset_netista
 from quiz_ui import Ui_MainWindow
+# from PySide6.QtGui import QPalette
 
 KYSYMYKSET_JA_VASTAUKSET = [
     (
@@ -79,9 +80,15 @@ class MainWindow(QMainWindow):
         
         if nappi == self.oikea_vastaus:
             print("Oikein!")
+            painettu_nappi = self.sender()
             self.pisteet += 1
-            # tai self.pisteet = self.pisteet + 1
-        
+            painettu_nappi.setStyleSheet(
+                "QPushButton {background: rgb(0,255,0);}"
+            )
+            QApplication.processEvents()
+            time.sleep(1)
+            painettu_nappi.setStyleSheet("")
+
         self.indeksi += 1
         if self.indeksi >= len(self.tiedot):
             laatikko = QMessageBox(self)
