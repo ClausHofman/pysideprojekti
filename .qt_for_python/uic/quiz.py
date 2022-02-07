@@ -17,7 +17,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QLabel,
     QMainWindow, QMenuBar, QPushButton, QSizePolicy,
-    QSlider, QStatusBar, QVBoxLayout, QWidget)
+    QStatusBar, QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -28,14 +28,16 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayout = QVBoxLayout(self.centralwidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
+        self.nro_label = QLabel(self.centralwidget)
+        self.nro_label.setObjectName(u"nro_label")
+        font = QFont()
+        font.setPointSize(28)
+        self.nro_label.setFont(font)
+
+        self.verticalLayout.addWidget(self.nro_label, 0, Qt.AlignHCenter)
+
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.horizontalSlider = QSlider(self.centralwidget)
-        self.horizontalSlider.setObjectName(u"horizontalSlider")
-        self.horizontalSlider.setOrientation(Qt.Horizontal)
-
-        self.horizontalLayout.addWidget(self.horizontalSlider)
-
         self.label = QLabel(self.centralwidget)
         self.label.setObjectName(u"label")
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.MinimumExpanding)
@@ -43,17 +45,11 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
         self.label.setSizePolicy(sizePolicy)
-        font = QFont()
-        font.setPointSize(14)
-        self.label.setFont(font)
+        font1 = QFont()
+        font1.setPointSize(14)
+        self.label.setFont(font1)
 
-        self.horizontalLayout.addWidget(self.label)
-
-        self.horizontalSlider_2 = QSlider(self.centralwidget)
-        self.horizontalSlider_2.setObjectName(u"horizontalSlider_2")
-        self.horizontalSlider_2.setOrientation(Qt.Horizontal)
-
-        self.horizontalLayout.addWidget(self.horizontalSlider_2)
+        self.horizontalLayout.addWidget(self.label, 0, Qt.AlignHCenter)
 
 
         self.verticalLayout.addLayout(self.horizontalLayout)
@@ -67,9 +63,9 @@ class Ui_MainWindow(object):
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.button2.sizePolicy().hasHeightForWidth())
         self.button2.setSizePolicy(sizePolicy1)
-        font1 = QFont()
-        font1.setPointSize(12)
-        self.button2.setFont(font1)
+        font2 = QFont()
+        font2.setPointSize(12)
+        self.button2.setFont(font2)
 
         self.gridLayout.addWidget(self.button2, 0, 1, 1, 1)
 
@@ -77,7 +73,7 @@ class Ui_MainWindow(object):
         self.button3.setObjectName(u"button3")
         sizePolicy1.setHeightForWidth(self.button3.sizePolicy().hasHeightForWidth())
         self.button3.setSizePolicy(sizePolicy1)
-        self.button3.setFont(font1)
+        self.button3.setFont(font2)
 
         self.gridLayout.addWidget(self.button3, 1, 0, 1, 1)
 
@@ -85,7 +81,7 @@ class Ui_MainWindow(object):
         self.button4.setObjectName(u"button4")
         sizePolicy1.setHeightForWidth(self.button4.sizePolicy().hasHeightForWidth())
         self.button4.setSizePolicy(sizePolicy1)
-        self.button4.setFont(font1)
+        self.button4.setFont(font2)
 
         self.gridLayout.addWidget(self.button4, 1, 1, 1, 1)
 
@@ -93,7 +89,7 @@ class Ui_MainWindow(object):
         self.button1.setObjectName(u"button1")
         sizePolicy1.setHeightForWidth(self.button1.sizePolicy().hasHeightForWidth())
         self.button1.setSizePolicy(sizePolicy1)
-        self.button1.setFont(font1)
+        self.button1.setFont(font2)
 
         self.gridLayout.addWidget(self.button1, 0, 0, 1, 1)
 
@@ -116,6 +112,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Kysymyspeli", None))
+        self.nro_label.setText(QCoreApplication.translate("MainWindow", u"Numero", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"Kysymys", None))
         self.button2.setText(QCoreApplication.translate("MainWindow", u"B", None))
         self.button3.setText(QCoreApplication.translate("MainWindow", u"C", None))
