@@ -27,7 +27,7 @@ VARAKYSYMYKSET = {
 
 def lataa_kysymykset_netista():
     try:
-        vastaus = requests.get(API_OSOITE, timeout=0.5)
+        vastaus = requests.get(API_OSOITE, timeout=1.5)
         tiedot = vastaus.json()
     except requests.exceptions.RequestException:
         tiedot = VARAKYSYMYKSET
