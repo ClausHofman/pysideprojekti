@@ -1,7 +1,7 @@
 import sys
 import time
 
-from PySide6.QtWidgets import QApplication, Qlabel, QMainWindow, QMessageBox
+from PySide6.QtWidgets import QApplication, QLabel, QMainWindow, QMessageBox
 
 from kysymykset import lataa_kysymykset_netista
 from quiz_ui import Ui_MainWindow
@@ -19,7 +19,6 @@ class MainWindow(QMainWindow):
         self.kierros = 1
         self.pisteet = 0
         self.indeksi = 0
-
 
     def luo_status_widget(self):
         self.kierros_label = QLabel()
@@ -87,10 +86,16 @@ class MainWindow(QMainWindow):
         self.indeksi += 1
         if self.indeksi >= len(self.tiedot):
             laatikko = QMessageBox(self)
-            laatikko.setText(f"Peli päättyi! Sait {self.pisteet} pistettä.")
+            if self.pisteet == len(self.tiedot):
+                laatikko.setText(f"Sait kaikki oikein {self.kierros} kierroksella!")
+                self.kierros = 0
+                self.tiedot = lataa_kysymykset_netista()
+            else:
+                laatikko.setText(f"Sait {self.pisteet} pistettä. Kokeile uudelleen.")
             laatikko.exec()
+            self.kierros += 1
             self.indeksi = 0
-            self.pisteet = 0
+            self.pisteet = 0    
 
         self.vaihda_kysymys_ja_vastaukset(self.indeksi)
 
@@ -101,7 +106,11 @@ class MainWindow(QMainWindow):
     @pisteet.setter
     def pisteet(self, arvo):
         self._pisteet = arvo
+        self.paivita_tilarivi()
+
+    def paivita_tilarivi(self):
         self.ui.statusbar.showMessage(f"Pisteet: {self.pisteet}")
+        self.kierros_label.setText(f"Kierros: {self.kierros}")
 
 
 if __name__ == "__main__":
