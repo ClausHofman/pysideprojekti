@@ -1,13 +1,12 @@
 import html
-import requests
 import random
-# API = application programming interface
-# JSON = Javascript object notation
 
-API_OSOITE = "https://opentdb.com/api.php?amount=10&difficulty=easy&type=multiple"
+import requests
+
+API_OSOITE = "https://opentdb.com/api.php?amount=10&type=multiple&difficulty=easy"
 
 VARAKYSYMYKSET = {
-    "results":  [
+    "results": [
         {
             "question": "Kysymys A",
             "correct_answer": "Oikea",
@@ -28,7 +27,7 @@ VARAKYSYMYKSET = {
 
 def lataa_kysymykset_netista():
     try:
-        vastaus = requests.get(API_OSOITE, timeout=2.0)
+        vastaus = requests.get(API_OSOITE, timeout=0.5)
         tiedot = vastaus.json()
     except requests.exceptions.RequestException:
         tiedot = VARAKYSYMYKSET
@@ -47,10 +46,6 @@ def lataa_kysymykset_netista():
         kysymykset_ja_vastaukset.append(tekstit)
     return kysymykset_ja_vastaukset
 
-
-    # print(tiedot)
-    # import pprint
-    # pprint.pprint(tiedot)
 
 if __name__ == "__main__":
     import pprint

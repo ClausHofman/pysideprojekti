@@ -1,27 +1,10 @@
 import sys
-import html
-from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox
 import time
+
+from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox
+
 from kysymykset import lataa_kysymykset_netista
 from quiz_ui import Ui_MainWindow
-# from PySide6.QtGui import QPalette
-
-KYSYMYKSET_JA_VASTAUKSET = [
-    (
-        "Mistä Python-ohjelmointikieli on saanut nimensä?",
-        "käärmeestä",
-        "laulusta",
-        "*TV-sarjasta",
-        "elokuvasta",
-    ),
-    (
-        "Paljonko on 5*5?",
-        "22",
-        "*25",
-        "27",
-        "35",
-    ),
-]
 
 
 class MainWindow(QMainWindow):
@@ -40,11 +23,11 @@ class MainWindow(QMainWindow):
         uudet_tekstit = []
         for (numero, teksti) in enumerate(tekstit):
             if teksti.startswith("*"):
-                # piilota tähti
-                # teksti = teksti[1:]
+                teksti = teksti[1:]
                 self.oikea_vastaus = numero
             uudet_tekstit.append(teksti)
         self.aseta_tekstit(uudet_tekstit)
+        self.ui.nro_label.setText(f"{indeksi+1}/{len(self.tiedot)}")
 
     def aseta_tekstit(self, tekstit):
         self.aseta_kysymys(tekstit[0])
@@ -78,19 +61,22 @@ class MainWindow(QMainWindow):
         else:
             return
 
-        painettu_nappi = self.sender()   
-        
+        painettu_nappi = self.sender()
+
         if nappi == self.oikea_vastaus:
             self.pisteet += 1
             napin_vari = "rgb(0,255,0)"
         else:
-            napin_vari  = "rgb(255,0,0)"
-
+            napin_vari = "rgb(255,0,0)"
+ 
         painettu_nappi.setStyleSheet("* {background: " + napin_vari + ";}")
         QApplication.processEvents()
-        time.sleep(1)
+        time.sleep(0.25)
         painettu_nappi.setStyleSheet("")
 
+        self.seuraava_kysymys()
+
+    def seuraava_kysymys(self):
         self.indeksi += 1
         if self.indeksi >= len(self.tiedot):
             laatikko = QMessageBox(self)
@@ -98,7 +84,17 @@ class MainWindow(QMainWindow):
             laatikko.exec()
             self.indeksi = 0
             self.pisteet = 0
+
         self.vaihda_kysymys_ja_vastaukset(self.indeksi)
+
+    @property
+    def pisteet(self):
+        return self._pisteet
+
+    @pisteet.setter
+    def pisteet(self, arvo):
+        self._pisteet = arvo
+        self.ui.statusbar.showMessage(f"Pisteet: {self.pisteet}")
 
 
 if __name__ == "__main__":
